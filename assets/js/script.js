@@ -1,13 +1,29 @@
 $(function () {
-  // declaring variables to compare planner time with current time
-  let currentDate = new Date();
-  let currentHour = currentDate.getHours();
-  let currentMinutes = currentDate.getMinutes();
+  // declaring our day and month arrays
+  let daysOfTheWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
-  //
-  $(".saveBtn").click(function () {
-    console.log("hello");
-  });
+  let monthsOfTheYear = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   // ids with their respective times
   let timeSlot = [
@@ -22,12 +38,28 @@ $(function () {
     { id: "#hour-17", hour: 17 },
   ];
 
+  // variables to display and compare time
+  let currentDate = new Date();
+  let currentMonth = monthsOfTheYear[currentDate.getMonth()];
+  let currentDayOfMonth = currentDate.getDate();
+  let currentDayName = daysOfTheWeek[currentDate.getDay()];
+  let currentHour = currentDate.getHours();
+  let currentMinutes = currentDate.getMinutes();
+
+  $("#currentDay").text(
+    `${currentDayName}, ${currentMonth} ${currentDayOfMonth}`
+  );
+  //
+  $(".saveBtn").click(function () {
+    console.log("hello");
+  });
+
   // class assignment based on time to assign color
   $.each(timeSlot, function (key, value) {
     let plannerHour = value.hour;
     if (value.hour <= currentHour) {
       if (currentMinutes > 0) {
-        console.log("it is in the past");
+        // console.log("it is in the past");
         let idHour = value.id;
 
         $(idHour).removeClass("future");
@@ -35,8 +67,8 @@ $(function () {
         $(idHour).addClass("past");
       }
     }
-    console.log(currentMinutes);
-    console.log(currentHour);
+    // console.log(currentMinutes);
+    // console.log(currentHour);
   });
 
   // $("input[type=text], textArea").text("hi friends");
