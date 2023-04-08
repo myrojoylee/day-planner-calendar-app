@@ -2,7 +2,6 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
@@ -12,6 +11,34 @@ $(function () {
   $(".saveBtn").click(function () {
     console.log("hello");
   });
+
+  // ids with their respective times
+  let timeSlot = [
+    { id: "#hour-9", hour: 9 },
+    { id: "#hour-10", hour: 10 },
+    { id: "#hour-11", hour: 11 },
+    { id: "#hour-12", hour: 12 },
+    { id: "#hour-13", hour: 13 },
+    { id: "#hour-14", hour: 14 },
+    { id: "#hour-15", hour: 15 },
+    { id: "#hour-16", hour: 16 },
+    { id: "#hour-17", hour: 17 },
+  ];
+
+  let currentDate = new Date();
+  let currentHour = currentDate.getHours();
+  console.log(currentHour);
+  console.log(timeSlot[3].hour);
+
+  if (timeSlot[3].hour > currentHour) {
+    let idHour = timeSlot[3].id;
+    console.log(idHour);
+    $(idHour).removeClass("future");
+    $(idHour).addClass("past");
+    console.log("hey");
+  }
+  $("input[type=text], textArea").text("hi friends");
+
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
@@ -24,3 +51,6 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+// DONE
+// TODO: Add a listener for click events on the save button.
