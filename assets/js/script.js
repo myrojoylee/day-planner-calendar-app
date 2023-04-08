@@ -46,29 +46,64 @@ $(function () {
   let currentHour = currentDate.getHours();
   let currentMinutes = currentDate.getMinutes();
 
-  $("#currentDay").text(
-    `${currentDayName}, ${currentMonth} ${currentDayOfMonth}`
-  );
+  if (currentDayOfMonth > 3 && currentDayOfMonth != 23) {
+    $("#currentDay").text(
+      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}th`
+    );
+  } else if (
+    (currentDayOfMonth = 1) ||
+    (currentDayOfMonth = 21) ||
+    (currentDayOfMonth = 31)
+  ) {
+    $("#currentDay").text(
+      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}st`
+    );
+  } else if ((currentDayOfMonth = 2) || (currentDayOfMonth = 22)) {
+    $("#currentDay").text(
+      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}nd`
+    );
+  } else {
+    $("#currentDay").text(
+      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}rd`
+    );
+  }
+
   //
-  $(".saveBtn").click(function () {
-    console.log("hello");
-  });
 
   // class assignment based on time to assign color
   $.each(timeSlot, function (key, value) {
     let plannerHour = value.hour;
-    if (value.hour <= currentHour) {
+    if (value.hour < currentHour) {
       if (currentMinutes > 0) {
-        // console.log("it is in the past");
         let idHour = value.id;
 
         $(idHour).removeClass("future");
         $(idHour).removeClass("present");
         $(idHour).addClass("past");
       }
+    } else if ((value.hour = currentHour)) {
+      $(idHour).removeClass("future");
+      $(idHour).removeClass("past");
+      $(idHour).addClass("present");
+    } else {
+      $(idHour).removeClass("present");
+      $(idHour).removeClass("past");
+      $(idHour).addClass("future");
     }
-    // console.log(currentMinutes);
-    // console.log(currentHour);
+  });
+
+  $(".saveBtn").click(function () {
+    // let userEntry = $(idHour, textarea).val();
+    // console.log(userEntry);
+    // let parentEl = $(this).parent().attr("id");
+    let parentEl = $(this).parent().attr("id");
+    let parentElId = `#${parentEl}`;
+    let textField = $(parentElId).find("textarea").val();
+    let userEntry = { hour: parentEl, event: textField };
+    console.log(userEntry);
+
+    // let userEntry = $(parentEl).text();
+    // console.log(userEntry);
   });
 
   // $("input[type=text], textArea").text("hi friends");
@@ -77,7 +112,10 @@ $(function () {
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-
+// ====================
+// DONE
+// TODO: Add code to display the current date in the header of the page.
+// ====================
 // DONE
 // TODO: Add a listener for click events on the save button.
 // ====================
@@ -99,4 +137,3 @@ $(function () {
 // the values of the corresponding textarea elements. HINT: How can the id
 // attribute of each time-block be used to do this?
 //
-// TODO: Add code to display the current date in the header of the page.
