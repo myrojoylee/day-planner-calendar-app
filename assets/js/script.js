@@ -40,15 +40,17 @@ $(function () {
 
   // variables to display and compare time
   let currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
   let currentMonth = monthsOfTheYear[currentDate.getMonth()];
   let currentDayOfMonth = currentDate.getDate();
   let currentDayName = daysOfTheWeek[currentDate.getDay()];
   let currentHour = currentDate.getHours();
   let currentMinutes = currentDate.getMinutes();
+  let currentDateInWords = `${currentMonth} ${currentDayOfMonth}, ${currentYear}`;
 
   if (currentDayOfMonth > 3 && currentDayOfMonth != 23) {
     $("#currentDay").text(
-      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}th`
+      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}th, ${currentYear}`
     );
   } else if (
     (currentDayOfMonth = 1) ||
@@ -99,9 +101,13 @@ $(function () {
     let parentEl = $(this).parent().attr("id");
     let parentElId = `#${parentEl}`;
     let textField = $(parentElId).find("textarea").val();
-    let userEntry = { hour: parentEl, event: textField };
-    console.log(userEntry);
+    let userEntry = {
+      day: currentDateInWords,
+      hour: parentEl,
+      event: textField,
+    };
 
+    localStorage.setItem("day-planner-events", JSON.stringify(userEntry));
     // let userEntry = $(parentEl).text();
     // console.log(userEntry);
   });
