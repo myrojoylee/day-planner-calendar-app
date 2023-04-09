@@ -17,12 +17,31 @@ body {
 /* ~~~~~~~~~~~~~~ Header/Title Styles ~~~~~~~~~~~~ */
 
 #header {
-  padding: 1rem !important;
+  padding: 2rem 2rem 0 2rem !important;
+}
+
+.p-5 {
+  padding: 0 !important;
+}
+
+.mb-4 {
+  margin-bottom: 0 !important;
 }
 
 #currentDay.lead {
   border-bottom: 5px solid black;
 }
+
+#confirmationMessage,
+.storage-message {
+  padding-bottom: 1rem;
+  color: transparent;
+  font-style: italic;
+}
+
+/* .storage-message {
+  color: red;
+} */
 
 /* ~~~~~~~~~~~~~~~ Hour Block Styles ~~~~~~~~~~~~~ */
 textarea {
