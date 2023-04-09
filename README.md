@@ -10,7 +10,7 @@ In this exercise I learned how to implement jQuery into my work to see how a Jav
 
 ======================= in progress =======================
 
-<img src="https://github.com/myrojoylee/professional-portfolio-mj-lee/blob/main/assets/images/portfolio_desktop_mobile_final.gif" width = "700" />
+<img src="" width = "700" />
 
 [Click here for repo](https://github.com/myrojoylee/day-planner-calendar-app)
 
