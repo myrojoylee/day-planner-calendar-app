@@ -1,6 +1,6 @@
 $(function () {
   // =================================================
-  // declaring our day and month arrays
+  // Day and month arrays
   // =================================================
   let daysOfTheWeek = [
     "Sunday",
@@ -27,7 +27,7 @@ $(function () {
     "December",
   ];
   // =================================================
-  // ids with their respective times
+  // IDs with their respective times
   // =================================================
   let timeSlot = [
     { id: "#hour-9", hour: 9 },
@@ -44,7 +44,7 @@ $(function () {
   let retrieveUserEntry = [];
 
   // =================================================
-  // variables to display and compare time
+  // Time and date variables
   // =================================================
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
@@ -54,6 +54,27 @@ $(function () {
   let currentHour = currentDate.getHours();
   let currentMinutes = currentDate.getMinutes();
   let currentDateInWords = `${currentMonth} ${currentDayOfMonth}, ${currentYear}`;
+
+  // =================================================
+  // Info in storage appears on reload, if applicable
+  // =================================================
+
+  if (localStorage.getItem("day-planner-events") !== null) {
+    retrieveUserEntry = JSON.parse(localStorage.getItem("day-planner-events"));
+
+    localStorage.setItem(
+      "day-planner-events",
+      JSON.stringify(retrieveUserEntry)
+    );
+
+    // only display events from the current day
+    $.each(retrieveUserEntry, function (key, value) {
+      if (value.day === currentDateInWords) {
+        let entryHourId = `#${value.hour}`;
+        $(entryHourId).find("textarea").text(value.event);
+      }
+    });
+  }
 
   // =================================================
   // writing current date at the top of page
@@ -81,17 +102,15 @@ $(function () {
   }
 
   // =================================================
-  // class assignment based on time to assign color
+  // Class assignment based on time to assign color
   // =================================================
   $.each(timeSlot, function (key, value) {
     let idHour = value.id;
 
     if (value.hour < currentHour) {
-      // if (currentMinutes > 0) {
       $(idHour).removeClass("future");
       $(idHour).removeClass("present");
       $(idHour).addClass("past");
-      // }
     } else if (value.hour == currentHour) {
       $(idHour).removeClass("future");
       $(idHour).removeClass("past");
@@ -104,12 +123,9 @@ $(function () {
   });
 
   // =================================================
-  // data handling after save icon is clicked
+  // Data handling after save icon is clicked
   // =================================================
   $(".saveBtn").click(function () {
-    // let userEntry = $(idHour, textarea).val();
-    // console.log(userEntry);
-    // let parentEl = $(this).parent().attr("id");
     let parentEl = $(this).parent().attr("id");
     let parentElId = `#${parentEl}`;
     let textField = $(parentElId).find("textarea").val();
@@ -129,7 +145,6 @@ $(function () {
         "day-planner-events",
         JSON.stringify(retrieveUserEntry)
       );
-      console.log(retrieveUserEntry);
 
       // only display events from the current day
       $.each(retrieveUserEntry, function (key, value) {
@@ -182,6 +197,9 @@ $(function () {
 // Done:
 // Items logged to the same time should all appear
 // but on next line
-
-// TO DO
-// Data should persist on refresh
+// ====================
+// Done:
+// Data should persist (and appear! ) on refresh
+// ====================
+// TO DO:
+// Alert appears at top when event has been stored
