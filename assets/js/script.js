@@ -1,5 +1,7 @@
 $(function () {
+  // =================================================
   // declaring our day and month arrays
+  // =================================================
   let daysOfTheWeek = [
     "Sunday",
     "Monday",
@@ -24,8 +26,9 @@ $(function () {
     "November",
     "December",
   ];
-
+  // =================================================
   // ids with their respective times
+  // =================================================
   let timeSlot = [
     { id: "#hour-9", hour: 9 },
     { id: "#hour-10", hour: 10 },
@@ -38,7 +41,11 @@ $(function () {
     { id: "#hour-17", hour: 17 },
   ];
 
+  let retrieveUserEntry = [];
+
+  // =================================================
   // variables to display and compare time
+  // =================================================
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
   let currentMonth = monthsOfTheYear[currentDate.getMonth()];
@@ -48,6 +55,9 @@ $(function () {
   let currentMinutes = currentDate.getMinutes();
   let currentDateInWords = `${currentMonth} ${currentDayOfMonth}, ${currentYear}`;
 
+  // =================================================
+  // writing current date at the top of page
+  // =================================================
   if (currentDayOfMonth > 3 && currentDayOfMonth != 23) {
     $("#currentDay").text(
       `${currentDayName}, ${currentMonth} ${currentDayOfMonth}th, ${currentYear}`
@@ -70,9 +80,9 @@ $(function () {
     );
   }
 
-  //
-
+  // =================================================
   // class assignment based on time to assign color
+  // =================================================
   $.each(timeSlot, function (key, value) {
     let plannerHour = value.hour;
     if (value.hour < currentHour) {
@@ -94,6 +104,9 @@ $(function () {
     }
   });
 
+  // =================================================
+  // data handling after save icon is clicked
+  // =================================================
   $(".saveBtn").click(function () {
     // let userEntry = $(idHour, textarea).val();
     // console.log(userEntry);
@@ -107,12 +120,35 @@ $(function () {
       event: textField,
     };
 
-    localStorage.setItem("day-planner-events", JSON.stringify(userEntry));
-    // let userEntry = $(parentEl).text();
-    // console.log(userEntry);
-  });
+    // retrieve existing data if it exists
+    if (localStorage.getItem("day-planner-events") !== null) {
+      retrieveUserEntry = JSON.parse(
+        localStorage.getItem("day-planner-events")
+      );
+      retrieveUserEntry.push(userEntry);
+      localStorage.setItem(
+        "day-planner-events",
+        JSON.stringify(retrieveUserEntry)
+      );
+      console.log(retrieveUserEntry);
 
-  // $("input[type=text], textArea").text("hi friends");
+      // only display events from the current day
+      $.each(retrieveUserEntry, function (key, value) {
+        if (value.day === currentDateInWords) {
+          let entryHourId = `#${value.hour}`;
+          $(entryHourId).find("textarea").text(value.event);
+        }
+      });
+    }
+    // if nothing in local storage, set item in storage.
+    else {
+      retrieveUserEntry.push(userEntry);
+      localStorage.setItem(
+        "day-planner-events",
+        JSON.stringify(retrieveUserEntry)
+      );
+    }
+  });
 });
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
@@ -132,14 +168,21 @@ $(function () {
 // past, present, and future classes? How can Day.js be used to get the
 // current hour in 24-hour time?
 // ====================
-
+// Done:
 // use the id in the containing time-block as a key to save the user input in
 // local storage. HINT: What does `this` reference in the click listener
 // function? How can DOM traversal be used to get the "hour-x" id of the
 // time-block containing the button that was clicked? How might the id be
 // useful when saving the description in local storage?
-
+// ====================
+// Done:
 // TODO: Add code to get any user input that was saved in localStorage and set
 // the values of the corresponding textarea elements. HINT: How can the id
 // attribute of each time-block be used to do this?
-//
+// ====================
+// Done:
+// Items logged to the same time should all appear
+// but on next line
+
+// TO DO
+// Data should persist on refresh
