@@ -103,6 +103,7 @@ $(function () {
 
   // =================================================
   // Class assignment based on time to assign color
+  // Text input fields and buttons disabled for 'past' class
   // =================================================
   $.each(timeSlot, function (key, value) {
     let idHour = value.id;
@@ -112,20 +113,20 @@ $(function () {
       $(idHour).removeClass("future");
       $(idHour).removeClass("present");
       $(idHour).addClass("past");
-      $(idHour).find("textarea").attr("disabled", "disabled");
-      $(idHour).find("button").attr("disabled", "disabled");
+      // $(idHour).find("textarea").attr("disabled", "disabled");
+      // $(idHour).find("button").attr("disabled", "disabled");
     } else if (value.hour == currentHour) {
       $(idHour).removeClass("future");
       $(idHour).removeClass("past");
       $(idHour).addClass("present");
-      $(idHour).find("textarea").removeAttr("disabled");
-      $(idHour).find("button").removeAttr("disabled");
+      // $(idHour).find("textarea").removeAttr("disabled");
+      // $(idHour).find("button").removeAttr("disabled");
     } else {
       $(idHour).removeClass("present");
       $(idHour).removeClass("past");
       $(idHour).addClass("future");
-      $(idHour).find("textarea").removeAttr("disabled");
-      $(idHour).find("button").removeAttr("disabled");
+      // $(idHour).find("textarea").removeAttr("disabled");
+      // $(idHour).find("button").removeAttr("disabled");
     }
   });
 
@@ -141,6 +142,15 @@ $(function () {
       hour: parentEl,
       event: textField,
     };
+    let entryHourId;
+
+    // $.each(timeSlot, function (key, value) {
+    //   let idHour = value.id;
+    //   if (value.hour < currentHour) {
+    //     $(idHour).find("textarea").text("pick another");
+    //     console.log("here?");
+    //   }
+    // });
 
     // retrieve existing data if it exists
     if (localStorage.getItem("day-planner-events") !== null) {
@@ -156,7 +166,7 @@ $(function () {
       // only display events from the current day
       $.each(retrieveUserEntry, function (key, value) {
         if (value.day === currentDateInWords) {
-          let entryHourId = `#${value.hour}`;
+          entryHourId = `#${value.hour}`;
           $(entryHourId).find("textarea").text(value.event);
         }
       });
