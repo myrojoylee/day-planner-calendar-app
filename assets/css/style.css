@@ -1,22 +1,20 @@
+/* ====================================================== */
+/*            ---------------RESET-------------           */
+/* ====================================================== */
 * {
   margin: 0;
   padding: 0;
 }
-
+/* ====================================================== */
+/*           ---------------STYLES-------------           */
+/* ====================================================== */
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
   text-align: center;
 }
 
-textarea {
-  background: transparent;
-  border: none;
-  resize: none;
-  color: #000000;
-  border-left: 1px solid black;
-  padding: 10px;
-}
+/* ~~~~~~~~~~~~~~ Header/Title Styles ~~~~~~~~~~~~ */
 
 #header {
   padding: 1rem !important;
@@ -24,6 +22,16 @@ textarea {
 
 #currentDay.lead {
   border-bottom: 5px solid black;
+}
+
+/* ~~~~~~~~~~~~~~~ Hour Block Styles ~~~~~~~~~~~~~ */
+textarea {
+  background: transparent;
+  border: none;
+  resize: none;
+  color: #000000;
+  border-left: 1px solid black;
+  padding: 10px;
 }
 
 .description {
@@ -58,6 +66,8 @@ textarea {
   background-color: #77dd77;
   color: white;
 }
+
+/* ~~~~~~~~~~~~~~ Button Styles ~~~~~~~~~~~~ */
 
 .saveBtn {
   border-left: 1px solid black;
