@@ -84,16 +84,15 @@ $(function () {
   // class assignment based on time to assign color
   // =================================================
   $.each(timeSlot, function (key, value) {
-    let plannerHour = value.hour;
-    if (value.hour < currentHour) {
-      if (currentMinutes > 0) {
-        let idHour = value.id;
+    let idHour = value.id;
 
-        $(idHour).removeClass("future");
-        $(idHour).removeClass("present");
-        $(idHour).addClass("past");
-      }
-    } else if ((value.hour = currentHour)) {
+    if (value.hour < currentHour) {
+      // if (currentMinutes > 0) {
+      $(idHour).removeClass("future");
+      $(idHour).removeClass("present");
+      $(idHour).addClass("past");
+      // }
+    } else if (value.hour == currentHour) {
       $(idHour).removeClass("future");
       $(idHour).removeClass("past");
       $(idHour).addClass("present");
