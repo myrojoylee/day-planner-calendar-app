@@ -10,7 +10,7 @@ In this exercise I learned how to implement jQuery into my work to see how a Jav
 
 Demo:
 
-<img src="" width = "700" />
+<img src="https://github.com/myrojoylee/day-planner-calendar-app/blob/main/assets/css/images/day-planner.gif" width = "700" />
 
 [Click here for repo](https://github.com/myrojoylee/day-planner-calendar-app)
 
