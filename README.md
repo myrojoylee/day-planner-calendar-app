@@ -8,7 +8,7 @@ In this exercise I learned how to implement jQuery into my work to see how a Jav
 
 ## Usage
 
-======================= in progress =======================
+Demo:
 
 <img src="" width = "700" />
 
