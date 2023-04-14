@@ -1,32 +1,5 @@
 $(function () {
   // =================================================
-  // Day and month arrays
-  // =================================================
-  let daysOfTheWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  let monthsOfTheYear = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  // =================================================
   // IDs with their respective times
   // =================================================
   let timeSlot = [
@@ -44,16 +17,14 @@ $(function () {
   let retrieveUserEntry = [];
 
   // =================================================
-  // Time and date variables
+  // Time and date variables using dayjs
   // =================================================
-  let currentDate = new Date();
-  let currentYear = currentDate.getFullYear();
-  let currentMonth = monthsOfTheYear[currentDate.getMonth()];
-  let currentDayOfMonth = currentDate.getDate();
-  let currentDayName = daysOfTheWeek[currentDate.getDay()];
-  let currentHour = currentDate.getHours();
-  let currentMinutes = currentDate.getMinutes();
-  let currentDateInWords = `${currentMonth} ${currentDayOfMonth}, ${currentYear}`;
+  let currentYear = dayjs().$y;
+  let currentMonth = dayjs().format("MMMM");
+  let currentDayOfMonth = dayjs().$D;
+  let currentDayName = dayjs().format("dddd");
+  let currentHour = dayjs().format("HH");
+  let todaysDate = dayjs().format("MMMM D, YYYY");
 
   // =================================================
   // Info in storage appears on reload, if applicable
@@ -67,9 +38,8 @@ $(function () {
       JSON.stringify(retrieveUserEntry)
     );
 
-    // only display events from the current day
     $.each(retrieveUserEntry, function (key, value) {
-      if (value.day === currentDateInWords) {
+      if (value.day === todaysDate) {
         let entryHourId = `#${value.hour}`;
         $(entryHourId).find("textarea").text(value.event);
       }
@@ -79,27 +49,7 @@ $(function () {
   // =================================================
   // writing current date at the top of page
   // =================================================
-  if (currentDayOfMonth > 3 && currentDayOfMonth != 23) {
-    $("#currentDay").text(
-      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}th, ${currentYear}`
-    );
-  } else if (
-    (currentDayOfMonth = 1) ||
-    (currentDayOfMonth = 21) ||
-    (currentDayOfMonth = 31)
-  ) {
-    $("#currentDay").text(
-      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}st`
-    );
-  } else if ((currentDayOfMonth = 2) || (currentDayOfMonth = 22)) {
-    $("#currentDay").text(
-      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}nd`
-    );
-  } else {
-    $("#currentDay").text(
-      `${currentDayName}, ${currentMonth} ${currentDayOfMonth}rd`
-    );
-  }
+  $("#currentDay").text(`${todaysDate}`);
 
   // =================================================
   // Class assignment based on time to assign color
@@ -107,26 +57,19 @@ $(function () {
   // =================================================
   $.each(timeSlot, function (key, value) {
     let idHour = value.id;
-    let toggleTextArea;
 
     if (value.hour < currentHour) {
       $(idHour).removeClass("future");
       $(idHour).removeClass("present");
       $(idHour).addClass("past");
-      // $(idHour).find("textarea").attr("disabled", "disabled");
-      // $(idHour).find("button").attr("disabled", "disabled");
     } else if (value.hour == currentHour) {
       $(idHour).removeClass("future");
       $(idHour).removeClass("past");
       $(idHour).addClass("present");
-      // $(idHour).find("textarea").removeAttr("disabled");
-      // $(idHour).find("button").removeAttr("disabled");
     } else {
       $(idHour).removeClass("present");
       $(idHour).removeClass("past");
       $(idHour).addClass("future");
-      // $(idHour).find("textarea").removeAttr("disabled");
-      // $(idHour).find("button").removeAttr("disabled");
     }
   });
 
@@ -138,19 +81,12 @@ $(function () {
     let parentElId = `#${parentEl}`;
     let textField = $(parentElId).find("textarea").val();
     let userEntry = {
-      day: currentDateInWords,
+      day: todaysDate,
       hour: parentEl,
       event: textField,
     };
-    let entryHourId;
 
-    // $.each(timeSlot, function (key, value) {
-    //   let idHour = value.id;
-    //   if (value.hour < currentHour) {
-    //     $(idHour).find("textarea").text("pick another");
-    //     console.log("here?");
-    //   }
-    // });
+    let entryHourId;
 
     // retrieve existing data if it exists
     if (localStorage.getItem("day-planner-events") !== null) {
@@ -165,7 +101,7 @@ $(function () {
 
       // only display events from the current day
       $.each(retrieveUserEntry, function (key, value) {
-        if (value.day === currentDateInWords) {
+        if (value.day === todaysDate) {
           entryHourId = `#${value.hour}`;
           $(entryHourId).find("textarea").text(value.event);
         }
