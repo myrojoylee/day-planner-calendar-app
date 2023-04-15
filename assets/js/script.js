@@ -24,7 +24,7 @@ $(function () {
   let currentDayOfMonth = dayjs().$D;
   let currentDayName = dayjs().format("dddd");
   let currentHour = dayjs().format("HH");
-  let todaysDate = dayjs().format("MMMM D, YYYY");
+  let todaysDate = dayjs().format("dddd, MMMM D, YYYY");
 
   // =================================================
   // Info in storage appears on reload, if applicable
@@ -53,7 +53,6 @@ $(function () {
 
   // =================================================
   // Class assignment based on time to assign color
-  // Text input fields and buttons disabled for 'past' class
   // =================================================
   $.each(timeSlot, function (key, value) {
     let idHour = value.id;
